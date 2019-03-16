@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+</head>
+<body>
+    
+    <h1>Welcome to letter guessing game</h1>
+    <p>Your previous guesses are: <span id="previousGuesses"></span> </p>
+    <p>Wins: <span id="wins"></span> </p>
+    <p>Losses: <span id="losses"></span> </p>
+    <p>Lives left: <span id="lives"></span> </p>
+    <h3 id="announcement"></h3>
+
+
+
+
+    <script>
+
+        //These are the computer's options
+
+        var computerOptions = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+
+        //This chooses one of the options
+
+        var computerChoice = computerOptions[Math.floor(Math.random() * computerOptions.length)];
+
+        //This is the number of attempts the user has in order to guess correctly.
+
+        var lives = 10;
+
+        //This will store the user's previous guesses.
+
+        var previousGuesses = [];
+
+        //These will change depending on how many times the user wins or looses.
+
+        var wins = 0;
+
+        var losses = 0;
+
+        function randomLetter() {
+
+            computerChoice = computerOptions[Math.floor(Math.random() * computerOptions.length)];
+
+        }
+
+
+
+        function reset() {
+            document.getElementById("previousGuesses").innerHTML = "";
+            document.getElementById("announcement").innerHTML = "";
+            lives = 10;
+            document.getElementById("lives").innerHTML = lives;
+            previousGuesses = [];
+            
+        }
+
+            // This function is run whenever the user presses a key.
+
+            document.onkeyup = function (event) {
+
+                console.log(event.keyCode)
+                // Determines which key was pressed.
+
+                var userGuess = event.key.toLowerCase();
+
+                //runs the game if the user enters a valid key.
+
+                if (event.keyCode >= 65 && event.keyCode <= 90) {
+
+                        //checks if the game is still going.
+
+                    if (lives > 1) {
+
+                        if (userGuess === computerChoice) {
+
+                            previousGuesses.push(userGuess);
+
+                            document.getElementById("previousGuesses").append(userGuess);
+
+                            wins++;
+
+                            document.getElementById("wins").innerHTML = wins;
+
+                            reset();
+
+                            randomLetter();
+
+                        } else {
+
+                            if (previousGuesses.indexOf(userGuess) >= 0) {
+
+                                document.getElementById("previousGuesses").append(userGuess);
+
+                            } else {
+
+                                previousGuesses.push(userGuess);
+
+                                document.getElementById("previousGuesses").append(userGuess);
+
+                                lives--;
+
+                                document.getElementById("lives").innerHTML = lives;
+                            }
+
+                        }
+
+                    } else {
+
+                        losses++;
+
+                        document.getElementById("losses").innerHTML = losses;
+
+                        reset();
+                    }
+                    
+                    
+                } else {
+
+                    
+
+                }
+
+            }
+
+    </script>
+</body>
+</html>
